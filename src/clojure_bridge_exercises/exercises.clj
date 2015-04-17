@@ -290,3 +290,93 @@ weather-temperatures-forecast
 ;; > Note: Clojure is strict when it comes to functions as arguments.  This means that a function pased as an argument to another function is evaluated before it is passed as the argument.  So a function always recieves values as arguments, because a function always evaluated to a value (even if that value is nil).
 
 
+;;;;;;;;;;;;
+;; simple values
+
+"This is a simple string"
+"Strings evaluate to themselves"
+"Strings are immutable like other data structures in Clojure"
+(str "Strings" "can" "be" "joined" "togehter" "using" "the" "str" "function")
+(str "but str doesnt add" "spaces" "between strings")
+(str "so add your own" " " "spaces")
+
+
+;; Experimenting with joining strings
+(def join-my-strings-with-spaces ["join" "us" "toether" "with" "spaces"])
+
+;; (map str join-my-strings-with-spaces)
+
+;; (apply str join-my-strings-with-spaces)
+
+;; Using another function called interpose, we can place something between each string as we join them together
+(apply str (interpose " " join-my-strings-with-spaces))
+
+;; See https://clojuredocs.org/clojure.core/interpose
+
+
+;; If you come from a Java world, you may want to use println to output a string.  Well you can
+
+(println "This is my string, but caveat emptor, this is a side effect")
+
+;; When you evaluate the above, you do not get a string in return... so what is going on?
+
+;; Discuss evalation verses side effects here?
+
+
+;; EXERCISE: Store the name of your hometown
+
+"Ripon"
+
+;; Write the name of your hometown as a string, and then assign that string to the name my-hometown.
+;; EXERCISE: Make a function to format names
+
+(def my-hometown "Ripon")
+
+my-hometown
+
+;; The str function can take any number of arguments, and it concatenates them together to make a string. Write a function called format-name that takes two arguments, first-name and last-name. This function should output the name like so: Last, First.
+
+(defn format-name
+  "Concatenate two strings together"
+  [firstname lastname]
+  (str firstname " " lastname))
+
+(format-name "John" "Stevenson")
+
+;; Adding in our interpose example from before...
+
+(defn format-name
+  "Concatenate two strings together"
+  [firstname lastname]
+  (interpose " " (str firstname lastname)))
+
+(format-name "John" "Stevenson")
+
+;; Thats not quite right.  If we change the arguments to a vector then we can 
+
+(defn format-name
+  "Concatenate two strings together"
+  [strings-to-join]
+  (apply str (interpose " " strings-to-join)))
+
+(format-name ["John" "Stevenson"])
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; More functions
+
+
+;; Note for existing devs:  Clojure does not use = for assignment, so you dont need hacks like == for assignement.
+;; Clojure keeps it simple
+
+
+;; Naming conventions: Predicates?
+;; When a function is asking a question where the answer is either true or false, the naming convention is to add a ? to the end of the function name.  for example
+;; (true? (= 1 1))
+;; (false? (= 1 2))
+
+;; (vector? [1 2 3])
+
+
+
