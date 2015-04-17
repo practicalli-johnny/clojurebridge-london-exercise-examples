@@ -172,3 +172,121 @@ long-range-weather-forecast
 ;; When we re-evaluate the weather-temperature-forecast it has all the new values
 weather-temperatures-forecast
 
+
+;;;;;;;;;
+;; Functions
+
+(defn total-bill
+  "Given subtotal of bill, return total after tax."
+  [subtotal]
+  (* 1.08 subtotal))
+
+(defn total-with-tip
+  "Given subtotal, return total after tax and tip."
+  [subtotal tip-percent]
+  (* 1.08 subtotal (+ 1 tip-percent)))
+
+(total-with-tip 12.50 0.18) ;=> 15.93
+(total-with-tip 50 0.18)    ;=> 63.72
+
+(total-with-tip 12.50 0.18) ;=> 15.93
+(total-with-tip 50 0.18)    ;=> 63.72
+
+
+;; EXERCISE: Find per-person share of bill among a group
+
+;; Create a new function called share-per-person.
+
+;; Modify our total-with-tip function, and call the new function share-per-person, that additionally takes in as an argument the number of people in the group for a bill. Have the function return the average bill amount per person.
+
+(defn share-per-person
+  "Share the cost of a bill evenly for everyone at the meal"
+  [meal-cost people]
+  (/ meal-cost people))
+
+
+(defn total-with-tip-per-person
+  "Given subtotal, return total after tax and tip per person (hard-coded)."
+  [subtotal tip-percent]
+  (share-per-person (* 1.08 subtotal (+ 1 tip-percent)) 2))
+
+(total-with-tip-per-person 12.50 0.18)
+(total-with-tip-per-person 12.50 0)
+
+
+
+;; EXERCISE: Find the average
+
+;; Create a function called average that takes a vector of bill amounts and returns the average of those amounts.
+
+;; Hint: You will need to use the functions reduce and count.
+
+;; Define a collection of the orders for a group of people at a resteraunt
+(def dine-in-orders [12.50 20 21 16 18.40])
+
+;; Define a collection of orders for a take-away for a party
+(def take-out-orders [6.00 6.00 7.95 6.25])
+
+;; Use the previously defined function, total-bill, to add tax to each of the order costs in the collection
+(map total-bill dine-in-orders)  ;=> [13.5 21.6 22.68 17.28 19.872]
+(map total-bill take-out-orders) ;=> [6.48 6.48 8.586 6.75]
+
+
+;; Lets look at map and reduce functions
+
+(reduce + dine-in-orders)
+
+;; So we can easily get the total cost of the orders, the average per person is simply the total divided by the number of orders
+
+;; Lets get the number of orders from the collection
+(count dine-in-orders)
+
+;; So joining these two together we can get the average
+(/ (reduce + dine-in-orders) (count dine-in-orders))
+
+;; Lets put this into a function so we have a name for this behaviour which we can call 
+
+(defn total-bill-per-person
+  "Given subtotal of bill, return total after tax."
+  [individual-order-costs]
+  (/ (reduce + dine-in-orders) (count dine-in-orders)))
+
+(total-bill-per-person dine-in-orders)
+
+
+;; But wait, we have forgotten to include sales tax 
+
+(defn total-bill-per-person-with-tax
+  "Given subtotal of bill, return total after tax."
+  [individual-order-costs]
+  (/ (reduce + (map total-bill dine-in-orders)) (count dine-in-orders)))
+
+(total-bill-per-person dine-in-orders)
+
+;; Oh no, we forgot the tip as well....
+
+(defn total-bill-per-person-with-tax-and-tip
+  "Given subtotal of bill, return total after tax."
+  [individual-order-costs]
+  (/ (reduce + (map total-with-tip dine-in-orders )) (count dine-in-orders)))
+
+(total-bill-per-person dine-in-orders)
+
+;;; This is not quite right, as we need to pass in the percentage of tip.... not sure how to do that, perhaps a partial function?
+
+;; We can use the function apply instead of reduce.  These functions can seem similar in concept, so lets see what we can do with apply to help you understand the difference
+
+
+;; Lets get the total cost of the dine-in orders
+(apply + dine-in-orders)
+
+;; Now if we divide by the number of orders in the collction, we can get the average
+(/ (apply + dine-in-orders) (count dine-in-orders) )
+
+;; This all looks the same, so lets look at the Clojure docs to try understand the difference
+
+
+
+;; > Note: Clojure is strict when it comes to functions as arguments.  This means that a function pased as an argument to another function is evaluated before it is passed as the argument.  So a function always recieves values as arguments, because a function always evaluated to a value (even if that value is nil).
+
+
