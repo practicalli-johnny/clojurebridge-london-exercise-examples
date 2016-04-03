@@ -435,5 +435,63 @@ my-hometown
 
 ;; Lastly, add your map to their information using conj.
 
-;; Use the get-names function from Exercise 2 to output a list of the names.
+;; Use the get-names function from the previous Exercise to output a list of the names.
+
+
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Predicates, Sequence comprehension & laziness
+
+;; Predicates
+;; A predicate is function that will return true or false.
+;; The naming convention in Clojure is to add a ? to the end of the name.
+
+(even? 7)
+(even? 8)
+
+;; Range generates an infinate sequence, however using the take function
+;; a specific sequence range is returned.
+(take 1000 (range))
+
+;; return only the even numbers 
+(def evens
+  (filter even? (take 1000 (range))))
+
+
+;; Using an anonymous function with the filter function to only return values
+;; where the value of dividing a value by 3 has an even remainder
+;; (filter (fn [x] (even? (mod x 3))) '(1 2 3 4 5 6))
+
+(def evens
+  (filter (fn [x] (even? (mod x 3))) (filter even? (take 1000 (range)))))
+
+evens
+
+;; map, take, drop, filter, rest :: sequence->sequence
+;; reduce, first  :: sequence->single
+(def evens
+  (->>
+   (range)
+   (take 1000)
+   (filter even?)
+   (filter (fn [x] (even? (mod x 3))))))
+
+
+;;;;;;;;;;;;;;;;;;;
+;; Threading Macros
+
+;; Using the Threading macros provides a simple way to chain functions together
+;; The reader macro for comments can be used to only run specific functions in the chain.
+;; In this Thread first example, the value of the previous function is the first
+;; argument to the next function
+;; Uncomment each line and evaluate to see the value returned by each expression
+(->
+  {}
+  #_(assoc ,,, :x {:x1 8})
+  #_(update-in ,,, [:x :x1] inc)
+  #_(assoc ,,, :y 99 :z 199999)
+  #_(dissoc ,,, :z))
+
 
