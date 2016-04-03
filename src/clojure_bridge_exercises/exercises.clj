@@ -381,3 +381,59 @@ my-hometown
 
 
 
+;; EXERCISE: Modeling Yourself
+
+;; Make a map representing yourself. Make sure it contains your first name and last name. Then, add your hometown to the map using assoc or merge.
+
+(def me
+  {:firstname "john" :lastname "stevenson"})
+
+(assoc john {:hometomwn "Ripon"})
+
+;; EXERCISE 2: Get the names of people
+
+;; Create a function called get-names that takes a vector of maps of people and returns a vector of their names.
+
+;; Here is an example of how it should work:
+
+(get-names [{:first "Margaret" :last "Atwood"}
+            {:first "Doris" :last "Lessing"}
+            {:first "Ursula" :last "Le Guin"}
+            {:first "Alice" :last "Munro"}])
+
+;=> ["Margaret Atwood" "Doris Lessing" "Ursula Le Guin" "Alice Munro"]
+
+
+(defn get-names [person]
+
+  (let [name (:name person)
+        age (:age person)]
+
+    (str name ,,,)  )  )
+
+
+(macroexpand '  (let [name (:name person)
+        age (:age person)]
+
+    (str name ,,,)  ) )
+
+(macroexpand let*)
+
+(defn othername [person]
+  (:name person))
+
+(get-names {:name "john stevenson" :age 21})
+
+;; Hint: First, create a function that returns the name when given a single person's map. Consider using the function Map (covered on Functions to apply that function to each element in your list of maps).
+
+
+;; EXERCISE: Modeling your classmates
+
+;; First, take the map you made about yourself.
+
+;; Then, create a vector of maps containing the first name, last name and hometown of two or three other classmates around you.
+
+;; Lastly, add your map to their information using conj.
+
+;; Use the get-names function from Exercise 2 to output a list of the names.
+
