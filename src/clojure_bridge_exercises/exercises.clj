@@ -30,6 +30,7 @@
 ;; Or to give this data more contenxt, an allow for further definitions of data for john, lets put the feet and inches data as the value for the height key
 (def john {:height {:feet 6 :inches 2}})
 
+john
 
 
 (defn convert-feet-and-inches-to-feet
@@ -60,7 +61,7 @@
 
 
 
-;; The hight for two other people
+;; The height for two other people
 (def Anna  {:height {:feet 5 :inches 10}})
 (def Bruce {:height {:feet 6 :inches 8}})
 
