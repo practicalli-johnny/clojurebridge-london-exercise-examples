@@ -495,3 +495,15 @@ evens
   #_(dissoc ,,, :z))
 
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Understanding Clojure macros
+
+;; Macros provide a way to extend the Clojure syntax and are typically used
+;; to maintain simplicity in the language.
+;; To look under the covers of Clojure macros you can use the macroexpand function
+;; (clojure.walk/macroexpand-all ')
+
+(clojure.walk/macroexpand-all '(defn expand-me [args] (str "behaviour of function")))
+
+;; expands to
+;; (def expand-me (fn* ([args] (str "behaviour of function"))))
