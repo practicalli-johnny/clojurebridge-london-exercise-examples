@@ -48,14 +48,14 @@
 
 
 (defn total-with-tip
-"Given subtotal, return total after tax and tip."
-[subtotal tip-pct number-of-people]
-(/ (* 1.08 subtotal (+ 1 tip-pct)) number-of-people)
-)
+ "Given subtotal, return total after tax and tip."
+ [subtotal tip-pct number-of-people]
+ (/ (* 1.08 subtotal (+ 1 tip-pct)) number-of-people))
+
 
 (defn share-per-person
-[number-of-people]
-)
+ [number-of-people])
+
 
 (total-with-tip 12 0.18 1)
 
@@ -63,7 +63,10 @@
 
 ;;;;;;;;
 
-(defn total-with-tip "Given subtotal, this is how much everyone better pay" [sub-total tip-pct number-of-people] (/ (* 1.08 sub-total (+ 1 tip-pct)) number-of-people) )
+(defn total-with-tip 
+  "Given subtotal, this is how much everyone better pay" 
+  [sub-total tip-pct number-of-people] 
+  (/ (* 1.08 sub-total (+ 1 tip-pct)) number-of-people))
 
 
 ;;;;;;;;;
@@ -77,8 +80,8 @@
 
 (defn divides-by-three? [x] (= (mod x 3) 0))
 
-(filter divides-by-three? (take 100(range))
-     )
+(filter divides-by-three? (take 100(range)))
+
 ;; (0 3 6 9 12 15 18 21 24 27 30 33 36 39 42 45 48 51 54 57 60 63 66 69 72 75 78 81 84 87 90 93 96 99)
 
 ;;;;;;;;;
@@ -97,14 +100,14 @@
 
 (defn average  [bill-amounts]
   "Given a vector of bill amounts, return the average of those amounts"
-  (/ (reduce + bill-amounts) (count bill-amounts))
-  )
+  (/ (reduce + bill-amounts) (count bill-amounts)))
+
 
 
 
 (defn average [elements]
-(/ (reduce + elements ) (count elements))
-)
+ (/ (reduce + elements ) (count elements)))
+
 (defn average [amounts]
   (/ (reduce + amounts) (count amounts)))
 
@@ -158,8 +161,8 @@
   [numbers]
   (let [total (reduce + numbers)
         number-of-elems (count numbers)]
-  (float (/ total number-of-elems))
-  ))
+   (float (/ total number-of-elems))))
+
 
 
 (if-let [user-entity (get-user-by-id 24)]
@@ -209,8 +212,8 @@ http://openweathermap.org/current
   (cond (divides-by-fifteen? number) "fizzbuzz"
       (divides-by-three? number) "fizz"
       (divides-by-five? number) "buzz"
-      :else number)
-  )
+      :else number))
+
 
 (map play-fizzbuzz (range 1 100))
 
